@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Heebo', sans-serif;
+  overflow: hidden;
+  width: 1280px;
+  height: 720px;
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.slide-container {
+  width: 1280px;
+  height: 720px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.bg-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.grid-lines {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.circle-accent {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(56,189,248,0.2);
+}
+
+.circle-1 {
+  width: 600px;
+  height: 600px;
+  top: -150px;
+  right: -150px;
+  border: 2px solid rgba(6,182,212,0.1);
+}
+
+.circle-2 {
+  width: 450px;
+  height: 450px;
+  top: -75px;
+  right: -75px;
+  border: 1px dashed rgba(56,189,248,0.3);
+}
+
+
+
+.data-card {
+  background-color: rgba(30,41,59,0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 12px;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(6,182,212,0.1);
+  border-radius: 8px;
+  color: #06b6d4;
+  font-size: 20px;
+  margin-right: 16px;
+}
+
+.accent-line {
+  height: 4px;
+  width: 80px;
+  background-color: #06b6d4;
+  margin-bottom: 24px;
+  border-radius: 2px;
+}
+
+h1 {
+  font-family: 'Rubik', sans-serif;
+  letter-spacing: -0.5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-pattern">
+<div class="grid-lines"></div>
+<div class="circle-accent circle-1"></div>
+<div class="circle-accent circle-2"></div>
+<div class="tech-dots"></div>
+</div>
+
+<div class="slide-container px-20 pt-28 pb-16 justify-center">
+<div class="w-full max-w-4xl relative z-10">
+
+<div class="inline-flex items-center bg-gray-800 rounded-full px-4 py-1.5 border border-cyan-500/30 mb-8">
+<div class="w-2 h-2 rounded-full bg-cyan-400 mr-2 animate-pulse"></div>
+<span class="text-cyan-400 text-sm font-bold tracking-wider uppercase">
+AiCA Retail Analytics
+</span>
+</div>
+
+<h1 class="text-7xl font-bold text-white mb-4 leading-tight">
+Beneficios por Categorías
+<span class="block text-cyan-400 text-5xl mt-2 font-normal">
+Analítica Avanzada para Retail
+</span>
+</h1>
+
+<div class="accent-line mt-6"></div>
+
+<p class="text-xl text-gray-300 max-w-2xl mb-12 font-light leading-relaxed">
+Información accionable en tiempo real para marketing, visual merchandising, experiencia del cliente y operaciones, 
+mejorando el desempeño y maximizando la rentabilidad.
+</p>
+
+<div class="grid grid-cols-2 gap-6 w-full max-w-3xl">
+
+<div class="data-card p-4 flex items-start">
+<div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+<div>
+<h3 class="text-white font-bold text-lg mb-1">Medición y Optimización</h3>
+<p class="text-gray-400 text-sm">Análisis profundo y mejora continua a gran escala</p>
+</div>
+</div>
+
+<div class="data-card p-4 flex items-start">
+<div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+<div>
+<h3 class="text-white font-bold text-lg mb-1">Privacidad y Seguridad</h3>
+<p class="text-gray-400 text-sm">Altos estándares para la protección de datos empresariales</p>
+</div>
+</div>
+
+<div class="data-card p-4 flex items-start">
+<div class="feature-icon"><i class="fas fa-network-wired"></i></div>
+<div>
+<h3 class="text-white font-bold text-lg mb-1">Integración Completa</h3>
+<p class="text-gray-400 text-sm">Conexión fluida con sistemas POS y plataformas existentes</p>
+</div>
+</div>
+
+<div class="data-card p-4 flex items-start">
+<div class="feature-icon"><i class="fas fa-bolt"></i></div>
+<div>
+<h3 class="text-white font-bold text-lg mb-1">Tiempo Real</h3>
+<p class="text-gray-400 text-sm">Toma de decisiones basada en datos al instante</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- <div class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-600"></div> -->
+
+</body>
+</html>

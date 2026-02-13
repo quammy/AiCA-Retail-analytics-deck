@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  padding:0;
+  font-family:'Heebo',sans-serif;
+  overflow:hidden;
+  width:1280px;
+  height:720px;
+  background-color:#0f172a;
+  color:#fff;
+}
+
+.slide-container{
+  width:1280px;
+  height:720px;
+  display:flex;
+  flex-direction:column;
+}
+
+.bg-pattern{
+  position:absolute;
+  inset:0;
+  opacity:0.1;
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2338bdf8' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.header-section{
+  padding:40px 60px 20px 60px;
+  border-bottom:1px solid rgba(56,189,248,0.2);
+  background-color:rgba(15,23,42,0.8);
+}
+
+.category-badge{
+  display:inline-block;
+  padding:4px 12px;
+  background-color:rgba(168,85,247,0.2);
+  color:#c084fc;
+  border-radius:4px;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:10px;
+  font-family:'Rubik',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  border:1px solid rgba(168,85,247,0.4);
+}
+
+.main-title{
+  font-size:36px;
+  font-weight:700;
+  font-family:'Rubik',sans-serif;
+}
+
+.content-grid{
+  display:flex;
+  flex:1;
+  padding:40px 60px;
+  gap:40px;
+}
+
+.problem-col{
+  flex:0.4;
+  background-color:rgba(30,41,59,0.4);
+  border:1px solid rgba(239,68,68,0.3);
+  border-radius:16px;
+  padding:30px;
+  position:relative;
+}
+
+.solution-col{
+  flex:0.6;
+  background-color:rgba(30,41,59,0.6);
+  border:1px solid rgba(6,182,212,0.3);
+  border-radius:16px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+}
+
+.col-header{
+  display:flex;
+  align-items:center;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.col-icon{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  margin-right:16px;
+}
+
+.icon-problem{ background-color:rgba(239,68,68,0.2); color:#ef4444; }
+.icon-solution{ background-color:rgba(6,182,212,0.2); color:#22d3ee; }
+
+.col-title{
+  font-size:24px;
+  font-weight:700;
+  font-family:'Rubik',sans-serif;
+}
+
+.problem-text{
+  font-size:20px;
+  line-height:1.6;
+  color:#cbd5e1;
+}
+
+.solution-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.solution-item{
+  display:flex;
+  align-items:flex-start;
+  margin-bottom:20px;
+}
+
+.check-icon{
+  color:#22d3ee;
+  margin-right:12px;
+  margin-top:6px;
+  font-size:18px;
+}
+
+.solution-text{
+  font-size:18px;
+  line-height:1.5;
+  color:#e2e8f0;
+}
+
+.chart-area{
+  flex:1;
+  margin-top:20px;
+  background-color:rgba(15,23,42,0.5);
+  border-radius:8px;
+  padding:10px;
+  border:1px solid rgba(56,189,248,0.1);
+  min-height:200px;
+}
+</style>
+</head>
+
+<body>
+<div class="bg-pattern"></div>
+
+<div class="slide-container">
+
+<div class="header-section">
+<div class="category-badge">Store Design & CX</div>
+<h1 class="main-title">
+Recorrido y Flujo del Cliente (Flow)
+</h1>
+</div>
+
+<div class="content-grid">
+
+<div class="problem-col">
+<div class="col-header">
+<div class="col-icon icon-problem">
+<i class="fas fa-route"></i>
+</div>
+<h2 class="col-title text-red-400">El Problema</h2>
+</div>
+
+<div class="problem-text">
+<p>Un layout no optimizado provoca cuellos de botella o hace que los clientes ignoren zonas rentables.</p>
+<p class="mt-4 text-slate-400 text-lg">
+Sin entender el recorrido natural dentro de la tienda, el diseño se basa en intuición y no en comportamiento real.
+</p>
+</div>
+</div>
+
+<div class="solution-col">
+<div class="col-header">
+<div class="col-icon icon-solution">
+<i class="fas fa-shoe-prints"></i>
+</div>
+<h2 class="col-title text-cyan-400">Lo que AiCA Permite</h2>
+</div>
+
+<ul class="solution-list">
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Seguimiento de recorrido (próximamente):</strong> comprensión real del flujo desde la entrada hasta la salida.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Integración con mapas de calor:</strong> cruzar dónde caminan con dónde se detienen.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Optimización del layout:</strong> mejorar ubicación de pasillos y exhibiciones para maximizar exposición.</span>
+</li>
+</ul>
+
+<div class="chart-area" id="flowChart"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+var chartDom=document.getElementById('flowChart');
+var myChart=echarts.init(chartDom);
+
+var option={
+series:[{
+type:'graph',
+layout:'none',
+symbolSize:40,
+label:{show:true,position:'bottom',color:'#94a3b8',fontSize:12},
+edgeSymbol:['circle','arrow'],
+edgeSymbolSize:[4,10],
+data:[
+{name:'Entrada',x:50,y:300,itemStyle:{color:'#22d3ee'}},
+{name:'Zona A',x:200,y:200,itemStyle:{color:'#38bdf8'}},
+{name:'Promociones',x:200,y:300,itemStyle:{color:'#f472b6'}},
+{name:'Zona B',x:400,y:200,itemStyle:{color:'#38bdf8'}},
+{name:'Cajas',x:550,y:300,itemStyle:{color:'#fb7185'}}
+],
+links:[
+{source:'Entrada',target:'Zona A',value:'70%',lineStyle:{width:5,curveness:0.2}},
+{source:'Entrada',target:'Promociones',value:'30%',lineStyle:{width:2,curveness:0.2}},
+{source:'Zona A',target:'Zona B',value:'80%',lineStyle:{width:4,curveness:0.2}},
+{source:'Zona A',target:'Promociones',value:'20%',lineStyle:{width:2,curveness:0.2}},
+{source:'Promociones',target:'Cajas',value:'50%',lineStyle:{width:3,curveness:0.2}},
+{source:'Zona B',target:'Cajas',value:'90%',lineStyle:{width:5,curveness:0.2}}
+],
+lineStyle:{opacity:0.9,width:2,color:'#bae6fd'}
+}]
+};
+
+myChart.setOption(option);
+window.addEventListener('resize',()=>myChart.resize());
+</script>
+
+</body>
+</html>

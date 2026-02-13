@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  padding:0;
+  font-family:'Heebo',sans-serif;
+  overflow:hidden;
+  width:1280px;
+  height:720px;
+  background-color:#0f172a;
+  color:#fff;
+}
+
+.slide-container{
+  width:1280px;
+  height:720px;
+  display:flex;
+  flex-direction:column;
+}
+
+.bg-pattern{
+  position:absolute;
+  inset:0;
+  opacity:0.1;
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2338bdf8' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.header-section{
+  padding:40px 60px 20px 60px;
+  border-bottom:1px solid rgba(56,189,248,0.2);
+  background-color:rgba(15,23,42,0.8);
+}
+
+.category-badge{
+  display:inline-block;
+  padding:4px 12px;
+  background-color:rgba(244,63,94,0.2);
+  color:#fb7185;
+  border-radius:4px;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:10px;
+  font-family:'Rubik',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  border:1px solid rgba(244,63,94,0.4);
+}
+
+.main-title{
+  font-size:36px;
+  font-weight:700;
+  font-family:'Rubik',sans-serif;
+}
+
+.content-grid{
+  display:flex;
+  flex:1;
+  padding:40px 60px;
+  gap:40px;
+}
+
+.problem-col{
+  flex:0.4;
+  background-color:rgba(30,41,59,0.4);
+  border:1px solid rgba(239,68,68,0.3);
+  border-radius:16px;
+  padding:30px;
+  position:relative;
+}
+
+.solution-col{
+  flex:0.6;
+  background-color:rgba(30,41,59,0.6);
+  border:1px solid rgba(6,182,212,0.3);
+  border-radius:16px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+}
+
+.col-header{
+  display:flex;
+  align-items:center;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.col-icon{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  margin-right:16px;
+}
+
+.icon-problem{ background-color:rgba(239,68,68,0.2); color:#ef4444; }
+.icon-solution{ background-color:rgba(6,182,212,0.2); color:#22d3ee; }
+
+.col-title{
+  font-size:24px;
+  font-weight:700;
+  font-family:'Rubik',sans-serif;
+}
+
+.problem-text{
+  font-size:20px;
+  line-height:1.6;
+  color:#cbd5e1;
+}
+
+.solution-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.solution-item{
+  display:flex;
+  align-items:flex-start;
+  margin-bottom:20px;
+}
+
+.check-icon{
+  color:#22d3ee;
+  margin-right:12px;
+  margin-top:6px;
+  font-size:18px;
+}
+
+.solution-text{
+  font-size:18px;
+  line-height:1.5;
+  color:#e2e8f0;
+}
+
+.chart-area{
+  flex:1;
+  margin-top:20px;
+  background-color:rgba(15,23,42,0.5);
+  border-radius:8px;
+  padding:10px;
+  border:1px solid rgba(56,189,248,0.1);
+  min-height:200px;
+}
+</style>
+</head>
+
+<body>
+<div class="bg-pattern"></div>
+
+<div class="slide-container">
+
+<div class="header-section">
+<div class="category-badge">Marketing</div>
+<h1 class="main-title">
+Segmentación de Audiencia (Audience Insights)
+</h1>
+</div>
+
+<div class="content-grid">
+
+<div class="problem-col">
+<div class="col-header" style="border-color:rgba(239,68,68,0.3);">
+<div class="col-icon icon-problem">
+<i class="fas fa-users-slash"></i>
+</div>
+<h2 class="col-title text-red-400">El Problema</h2>
+</div>
+
+<div class="problem-text">
+<p>La misma tienda y el mismo mensaje no funcionan igual para todos los segmentos.</p>
+<p class="mt-4 text-slate-400 text-lg">
+Sin una comprensión clara de la demografía que visita la tienda, campañas y exhibiciones se convierten en “disparos al aire” en lugar de estrategias dirigidas.
+</p>
+</div>
+</div>
+
+<div class="solution-col">
+<div class="col-header" style="border-color:rgba(6,182,212,0.3);">
+<div class="col-icon icon-solution">
+<i class="fas fa-id-card-clip"></i>
+</div>
+<h2 class="col-title text-cyan-400">Lo que AiCA Permite</h2>
+</div>
+
+<ul class="solution-list">
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Identificación demográfica:</strong> segmentación por género y rangos de edad.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Análisis por horario:</strong> detección de qué segmento entra en qué días y horas.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Precisión en mensajes:</strong> ajuste de horarios, promociones y exhibiciones según la audiencia.</span>
+</li>
+</ul>
+
+<div class="chart-area" id="demographicsChart"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+var chartDom=document.getElementById('demographicsChart');
+var myChart=echarts.init(chartDom);
+
+var option={
+  backgroundColor:'transparent',
+  title:{
+    text:'Distribución semanal por edad y género',
+    textStyle:{color:'#94a3b8',fontSize:14,fontWeight:'normal'},
+    left:'center',
+    top:5
+  },
+  legend:{
+    top:30,
+    textStyle:{color:'#cbd5e1'},
+    data:['Hombres','Mujeres']
+  },
+  grid:{left:'3%',right:'4%',bottom:'3%',top:'25%',containLabel:true},
+  xAxis:{
+    type:'value',
+    axisLabel:{color:'#94a3b8'}
+  },
+  yAxis:{
+    type:'category',
+    data:['18-24','25-34','35-44','45-54','55+'],
+    axisLabel:{color:'#94a3b8'}
+  },
+  series:[
+    {
+      name:'Hombres',
+      type:'bar',
+      stack:'total',
+      label:{show:true,position:'insideRight',formatter:'{c}%'},
+      itemStyle:{color:'#3b82f6'},
+      data:[15,20,25,15,10]
+    },
+    {
+      name:'Mujeres',
+      type:'bar',
+      stack:'total',
+      label:{show:true,position:'insideRight',formatter:'{c}%'},
+      itemStyle:{color:'#f43f5e'},
+      data:[25,30,20,10,5]
+    }
+  ]
+};
+
+myChart.setOption(option);
+window.addEventListener('resize',()=>myChart.resize());
+</script>
+
+</body>
+</html>

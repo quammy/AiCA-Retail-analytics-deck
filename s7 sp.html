@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  padding:0;
+  font-family:'Heebo',sans-serif;
+  overflow:hidden;
+  width:1280px;
+  height:720px;
+  background-color:#0f172a;
+  color:#fff;
+}
+
+.slide-container{
+  width:1280px;
+  height:720px;
+  display:flex;
+  flex-direction:column;
+}
+
+.bg-pattern{
+  position:absolute;
+  inset:0;
+  opacity:0.1;
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2338bdf8' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.header-section{
+  padding:40px 60px 20px 60px;
+  border-bottom:1px solid rgba(56,189,248,0.2);
+  background-color:rgba(15,23,42,0.8);
+}
+
+.category-badge{
+  display:inline-block;
+  padding:4px 12px;
+  background-color:rgba(234,179,8,0.2);
+  color:#fcd34d;
+  border-radius:4px;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:10px;
+  font-family:'Rubik',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  border:1px solid rgba(234,179,8,0.4);
+}
+
+.main-title{
+  font-size:36px;
+  font-weight:700;
+  font-family:'Rubik',sans-serif;
+}
+
+.content-grid{
+  display:flex;
+  flex:1;
+  padding:40px 60px;
+  gap:40px;
+}
+
+.problem-col{
+  flex:0.4;
+  background-color:rgba(30,41,59,0.4);
+  border:1px solid rgba(239,68,68,0.3);
+  border-radius:16px;
+  padding:30px;
+  position:relative;
+}
+
+.solution-col{
+  flex:0.6;
+  background-color:rgba(30,41,59,0.6);
+  border:1px solid rgba(6,182,212,0.3);
+  border-radius:16px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+}
+
+.col-header{
+  display:flex;
+  align-items:center;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.col-icon{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  margin-right:16px;
+}
+
+.icon-problem{ background-color:rgba(239,68,68,0.2); color:#ef4444; }
+.icon-solution{ background-color:rgba(6,182,212,0.2); color:#22d3ee; }
+
+.col-title{
+  font-size:24px;
+  font-weight:700;
+  font-family:'Rubik',sans-serif;
+}
+
+.problem-text{
+  font-size:20px;
+  line-height:1.6;
+  color:#cbd5e1;
+}
+
+.solution-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.solution-item{
+  display:flex;
+  align-items:flex-start;
+  margin-bottom:20px;
+}
+
+.check-icon{
+  color:#22d3ee;
+  margin-right:12px;
+  margin-top:6px;
+  font-size:18px;
+}
+
+.solution-text{
+  font-size:18px;
+  line-height:1.5;
+  color:#e2e8f0;
+}
+
+.chart-area{
+  flex:1;
+  margin-top:20px;
+  background-color:rgba(15,23,42,0.5);
+  border-radius:8px;
+  padding:10px;
+  border:1px solid rgba(56,189,248,0.1);
+  min-height:200px;
+}
+</style>
+</head>
+
+<body>
+<div class="bg-pattern"></div>
+
+<div class="slide-container">
+
+<div class="header-section">
+<div class="category-badge">Merchandising</div>
+<h1 class="main-title">
+Optimización de Planogramas y Exhibiciones (What Works Where)
+</h1>
+</div>
+
+<div class="content-grid">
+
+<div class="problem-col">
+<div class="col-header" style="border-color:rgba(239,68,68,0.3);">
+<div class="col-icon icon-problem">
+<i class="fas fa-cubes-stacked"></i>
+</div>
+<h2 class="col-title text-red-400">El Problema</h2>
+</div>
+
+<div class="problem-text">
+<p>Se invierten recursos importantes en exhibiciones, pero no se sabe si realmente funcionan.</p>
+<p class="mt-4 text-slate-400 text-lg">
+¿La ubicación en el anaquel es óptima? ¿Los clientes realmente notan las exhibiciones costosas? Las decisiones suelen basarse en intuición, no en datos reales.
+</p>
+</div>
+</div>
+
+<div class="solution-col">
+<div class="col-header" style="border-color:rgba(6,182,212,0.3);">
+<div class="col-icon icon-solution">
+<i class="fas fa-eye"></i>
+</div>
+<h2 class="col-title text-cyan-400">Lo que AiCA Permite</h2>
+</div>
+
+<ul class="solution-list">
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Mapas de calor por tiempo de permanencia:</strong> identificación precisa de zonas calientes vs zonas frías.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Seguimiento de recorrido (próximamente):</strong> validación de si los clientes llegan y se detienen en la exhibición.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Mejora del ROI:</strong> decisiones basadas en datos para optimizar ubicación de productos y aumentar ventas.</span>
+</li>
+</ul>
+
+<div class="chart-area" id="heatmapChart"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+var chartDom=document.getElementById('heatmapChart');
+var myChart=echarts.init(chartDom);
+
+var niveles=['Nivel Inferior','Nivel Medio-Bajo','Altura de Ojos','Nivel Superior'];
+var zonas=['Zona 1','Zona 2','Zona 3','Zona 4','Zona 5','Zona 6'];
+
+var data=[
+[0,0,2],[0,1,3],[0,2,1],[0,3,1],[0,4,2],[0,5,1],
+[1,0,4],[1,1,6],[1,2,5],[1,3,3],[1,4,4],[1,5,2],
+[2,0,7],[2,1,9],[2,2,10],[2,3,8],[2,4,6],[2,5,5],
+[3,0,1],[3,1,2],[3,2,3],[3,3,2],[3,4,1],[3,5,0]
+];
+
+data=data.map(item=>[item[1],item[0],item[2]]);
+
+var option={
+tooltip:{position:'top',formatter:params=>'Nivel de interés: '+params.value[2]},
+grid:{top:'10%',bottom:'10%',left:'15%',right:'5%'},
+xAxis:{type:'category',data:zonas,axisLabel:{color:'#94a3b8'}},
+yAxis:{type:'category',data:niveles,axisLabel:{color:'#94a3b8'}},
+visualMap:{
+min:0,max:10,orient:'horizontal',left:'center',bottom:'0%',
+textStyle:{color:'#94a3b8'},
+inRange:{color:['#1e293b','#0e7490','#06b6d4','#22d3ee','#ef4444']}
+},
+series:[{
+type:'heatmap',
+data:data,
+itemStyle:{borderColor:'#0f172a',borderWidth:2,borderRadius:4}
+}]
+};
+
+myChart.setOption(option);
+window.addEventListener('resize',()=>myChart.resize());
+</script>
+
+</body>
+</html>

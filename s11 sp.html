@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  padding:0;
+  font-family:'Heebo',sans-serif;
+  overflow:hidden;
+  width:1280px;
+  height:720px;
+  background-color:#0f172a;
+  color:#ffffff;
+}
+
+.slide-container{
+  width:1280px;
+  height:720px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  z-index:1;
+}
+
+.bg-pattern{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  opacity:0.1;
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2310b981' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.header-section{
+  padding:40px 60px 20px 60px;
+  border-bottom:1px solid rgba(16,185,129,0.2);
+  background-color:rgba(15,23,42,0.8);
+}
+
+.category-badge{
+  display:inline-block;
+  padding:4px 12px;
+  background-color:rgba(16,185,129,0.2);
+  color:#34d399;
+  border-radius:4px;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:10px;
+  font-family:'Rubik',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  border:1px solid rgba(16,185,129,0.4);
+}
+
+.main-title{
+  font-size:36px;
+  font-weight:700;
+  font-family:'Rubik',sans-serif;
+}
+
+.content-grid{
+  display:flex;
+  flex:1;
+  padding:40px 60px;
+  gap:40px;
+}
+
+.problem-col{
+  flex:0.4;
+  background-color:rgba(30,41,59,0.4);
+  border:1px solid rgba(239,68,68,0.3);
+  border-radius:16px;
+  padding:30px;
+  position:relative;
+}
+
+.solution-col{
+  flex:0.6;
+  background-color:rgba(30,41,59,0.6);
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:16px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+}
+
+.col-header{
+  display:flex;
+  align-items:center;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.col-icon{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  margin-right:16px;
+}
+
+.icon-problem{ background-color:rgba(239,68,68,0.2); color:#ef4444; }
+.icon-solution{ background-color:rgba(16,185,129,0.2); color:#34d399; }
+
+.col-title{
+  font-size:24px;
+  font-weight:700;
+  font-family:'Rubik',sans-serif;
+}
+
+.problem-text{
+  font-size:20px;
+  line-height:1.6;
+  color:#cbd5e1;
+}
+
+.solution-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.solution-item{
+  display:flex;
+  align-items:flex-start;
+  margin-bottom:20px;
+}
+
+.check-icon{
+  color:#34d399;
+  margin-right:12px;
+  margin-top:6px;
+  font-size:18px;
+}
+
+.solution-text{
+  font-size:18px;
+  line-height:1.5;
+  color:#e2e8f0;
+}
+
+.chart-area{
+  flex:1;
+  margin-top:20px;
+  background-color:rgba(15,23,42,0.5);
+  border-radius:8px;
+  padding:10px;
+  border:1px solid rgba(16,185,129,0.1);
+  min-height:200px;
+}
+</style>
+</head>
+
+<body>
+<div class="bg-pattern"></div>
+
+<div class="slide-container">
+
+<div class="header-section">
+<div class="category-badge">Operations</div>
+<h1 class="main-title">Optimización de Personal (Staffing & Productivity)</h1>
+</div>
+
+<div class="content-grid">
+
+<div class="problem-col">
+<div class="col-header">
+<div class="col-icon icon-problem">
+<i class="fas fa-user-clock"></i>
+</div>
+<h2 class="col-title text-red-400">El Problema</h2>
+</div>
+
+<div class="problem-text">
+<p>Desalineación entre la cantidad de personal y la demanda real de clientes.</p>
+<p class="mt-4 text-slate-400 text-lg">
+Se generan filas y saturación cuando falta personal, o “horas muertas” costosas cuando hay exceso de staff innecesario.
+</p>
+</div>
+</div>
+
+<div class="solution-col">
+<div class="col-header">
+<div class="col-icon icon-solution">
+<i class="fas fa-users-gear"></i>
+</div>
+<h2 class="col-title text-emerald-400">Lo que AiCA Permite</h2>
+</div>
+
+<ul class="solution-list">
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Identificación de horas pico y valle:</strong> análisis histórico y en tiempo real de entradas/salidas para ajustar turnos.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Ocupación y alertas en tiempo real:</strong> detectar necesidad de refuerzo antes de que se forme la fila.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>Gestión focalizada:</strong> uso de mapas de calor para identificar áreas que requieren apoyo (ej. cajas).</span>
+</li>
+</ul>
+
+<div class="chart-area" id="staffingChart"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+var chartDom=document.getElementById('staffingChart');
+var myChart=echarts.init(chartDom);
+
+var option={
+backgroundColor:'transparent',
+title:{
+text:'Optimización: tráfico de clientes vs personal activo',
+left:'center',
+textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:'normal'},
+top:5
+},
+tooltip:{trigger:'axis',axisPointer:{type:'cross'}},
+grid:{left:'3%',right:'4%',bottom:'3%',top:'18%',containLabel:true},
+legend:{
+data:['Tráfico de clientes (Real-time)','Personal activo'],
+textStyle:{color:'#94a3b8'},
+top:25,
+right:10
+},
+xAxis:[{
+type:'category',
+boundaryGap:false,
+data:['08:00','10:00','12:00','14:00','16:00','18:00','20:00','22:00'],
+axisLine:{lineStyle:{color:'#475569'}},
+axisLabel:{color:'#94a3b8'}
+}],
+yAxis:[
+{
+type:'value',
+name:'Clientes',
+splitLine:{lineStyle:{color:'#334155',type:'dashed'}},
+axisLabel:{color:'#94a3b8'}
+},
+{
+type:'value',
+name:'Personal',
+min:0,
+max:10,
+interval:2,
+splitLine:{show:false},
+axisLabel:{color:'#34d399'}
+}
+],
+series:[
+{
+name:'Tráfico de clientes (Real-time)',
+type:'line',
+smooth:true,
+areaStyle:{
+color:new echarts.graphic.LinearGradient(0,0,0,1,[
+{offset:0,color:'rgba(56,189,248,0.5)'},
+{offset:1,color:'rgba(56,189,248,0.0)'}
+])
+},
+itemStyle:{color:'#38bdf8'},
+lineStyle:{width:3},
+data:[15,45,120,80,90,150,60,20]
+},
+{
+name:'Personal activo',
+type:'step',
+yAxisIndex:1,
+step:'start',
+itemStyle:{color:'#34d399'},
+lineStyle:{width:2,type:'dashed'},
+data:[2,4,8,6,6,9,5,2]
+}
+]
+};
+
+myChart.setOption(option);
+window.addEventListener('resize',function(){myChart.resize();});
+</script>
+
+</body>
+</html>

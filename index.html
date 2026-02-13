@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AiCA Retail Analytics - Presentación</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        /* Full-screen iframe container */
+        #stage {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+
+        iframe.active {
+            display: block;
+        }
+
+        /* Floating Logo - Top Right */
+        .floating-logo {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 10000;
+            pointer-events: auto; /* Allows clicking through to iframe if needed */
+        }
+
+        .floating-logo img {
+            height: 60px; /* Adjust size as needed */
+            width: auto;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+        }
+
+        /* Floating Controls Container */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 9999;
+            background: rgba(15, 23, 42, 0.7);
+            padding: 8px 12px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(34, 211, 238, 0.4);
+            background: rgba(34, 211, 238, 0.1);
+            color: #22d3ee;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #22d3ee;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .slide-info {
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 10px;
+            min-width: 50px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-logo">
+    <a href="https://www.aica44.com/es" target="_blank">
+        <img src="AiCA_full_name_logo_white2.svg" alt="AiCA Retail Analytics Logo">
+    </a>
+</div>
+
+    <div id="stage">
+        <iframe id="frame-1" src="s1 sp.html" class="active"></iframe>
+        <iframe id="frame-2" src="s2 sp.html"></iframe>
+        <iframe id="frame-3" src="s3 sp.html"></iframe>
+        <iframe id="frame-4" src="s4 sp.html"></iframe>
+        <iframe id="frame-5" src="s5 sp.html"></iframe>
+        <iframe id="frame-6" src="s6 sp.html"></iframe>
+        <iframe id="frame-7" src="s7 sp.html"></iframe>
+        <iframe id="frame-8" src="s8 sp.html"></iframe>
+        <iframe id="frame-9" src="s9 sp.html"></iframe>
+        <iframe id="frame-10" src="s10 sp.html"></iframe>
+        <iframe id="frame-11" src="s11 sp.html"></iframe>
+        <iframe id="frame-12" src="s12 sp.html"></iframe>
+        <iframe id="frame-13" src="s13 sp.html"></iframe>
+        <iframe id="frame-14" src="s14 sp.html"></iframe>
+    </div>
+
+    <div class="controls">
+        <button id="firstBtn" class="nav-btn" onclick="goToSlide(1)" title="Inicio">&#171;</button>
+        
+        <button id="prevBtn" class="nav-btn" onclick="changeSlide(-1)">&#10094;</button>
+        
+        <div class="slide-info"><span id="currentNum">1</span> / 14</div>
+        
+        <button id="nextBtn" class="nav-btn" onclick="changeSlide(1)">&#10095;</button>
+        
+        <button id="lastBtn" class="nav-btn" onclick="goToSlide(14)" title="Fin">&#187;</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 14;
+
+        function changeSlide(direction) {
+            const nextSlide = currentSlide + direction;
+            goToSlide(nextSlide);
+        }
+
+        function goToSlide(slideIndex) {
+            if (slideIndex >= 1 && slideIndex <= totalSlides) {
+                document.getElementById(`frame-${currentSlide}`).classList.remove('active');
+                document.getElementById(`frame-${slideIndex}`).classList.add('active');
+                currentSlide = slideIndex;
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            // Disable logic for prev/first
+            const isFirst = (currentSlide === 1);
+            document.getElementById('prevBtn').disabled = isFirst;
+            document.getElementById('firstBtn').disabled = isFirst;
+
+            // Disable logic for next/last
+            const isLast = (currentSlide === totalSlides);
+            document.getElementById('nextBtn').disabled = isLast;
+            document.getElementById('lastBtn').disabled = isLast;
+
+            document.getElementById('currentNum').innerText = currentSlide;
+        }
+
+        // Keyboard Support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowRight" || e.key === "ArrowDown") changeSlide(1);
+            if (e.key === "ArrowLeft" || e.key === "ArrowUp") changeSlide(-1);
+            if (e.key === "Home") goToSlide(1);
+            if (e.key === "End") goToSlide(totalSlides);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
