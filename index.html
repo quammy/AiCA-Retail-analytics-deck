@@ -56,7 +56,7 @@
     <div class="lang-bar">
         <button id="btn-sp" class="lang-btn active" onclick="setLanguage('sp')">ES</button>
         <span style="color:rgba(255,255,255,0.2)">|</span>
-        <button id="btn-HE" class="lang-btn" onclick="setLanguage('HE')">HE</button>
+        <button id="btn-he" class="lang-btn" onclick="setLanguage('he')">HE</button>
     </div>
 
     <div id="logo-container" class="floating-logo">
@@ -101,9 +101,9 @@
             const controls = document.getElementById('controls-container');
             
             document.getElementById('btn-sp').classList.toggle('active', lang === 'sp');
-            document.getElementById('btn-HE').classList.toggle('active', lang === 'he');
+            document.getElementById('btn-he').classList.toggle('active', lang === 'he');
 
-            if (lang === 'HE') {
+            if (lang === 'he') {
                 logo.classList.add('rtl');
                 controls.classList.add('rtl');
                 // Adjusting button symbols for RTL logic
@@ -153,8 +153,8 @@
         setLanguage('sp');
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === "ArrowRight") changeSlide(currentLang === 'HE' ? -1 : 1);
-            if (e.key === "ArrowLeft") changeSlide(currentLang === 'HE' ? 1 : -1);
+            if (e.key === "ArrowRight") changeSlide(currentLang === 'he' ? -1 : 1);
+            if (e.key === "ArrowLeft") changeSlide(currentLang === 'he' ? 1 : -1);
             if (e.key === "Home") goToSlide(1);
             if (e.key === "End") goToSlide(totalSlides);
         });
