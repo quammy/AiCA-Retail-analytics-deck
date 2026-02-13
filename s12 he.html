@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&amp;family=Rubik:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Heebo', sans-serif;
+      overflow: hidden;
+      width: 1280px;
+      height: 720px;
+      background-color: #0f172a; /* Slate 900 */
+      color: #ffffff;
+    }
+    
+    .slide-container {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+
+    /* Background Pattern */
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.1;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .header-section {
+      padding: 40px 60px 20px 60px;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+      background-color: rgba(15, 23, 42, 0.8);
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background-color: rgba(16, 185, 129, 0.2); /* Emerald for Operations */
+      color: #34d399;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-family: 'Rubik', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .main-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .content-grid {
+      display: flex;
+      flex: 1;
+      padding: 40px 60px;
+      gap: 40px;
+    }
+
+    .problem-col {
+      flex: 0.4;
+      background-color: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .solution-col {
+      flex: 0.6;
+      background-color: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .col-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-left: 16px;
+    }
+
+    .icon-problem {
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .icon-solution {
+      background-color: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .col-title {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .problem-text {
+      font-size: 20px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .solution-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .solution-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .check-icon {
+      color: #34d399;
+      margin-left: 12px;
+      margin-top: 6px;
+      font-size: 18px;
+    }
+
+    .solution-text {
+      font-size: 18px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .chart-area {
+      flex: 1;
+      margin-top: 20px;
+      background-color: rgba(15, 23, 42, 0.5);
+      border-radius: 8px;
+      padding: 10px;
+      border: 1px solid rgba(16, 185, 129, 0.1);
+      min-height: 200px;
+    }
+</style>
+</head>
+<body style="">
+<div class="bg-pattern"></div>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-section">
+<div class="category-badge">תפעול (Operations)</div>
+<h1 class="main-title">ניהול עומסים ותורים (Queue &amp; Congestion Control)</h1>
+</div>
+<!-- Main Content -->
+<div class="content-grid">
+<!-- Left Column: The Problem -->
+<div class="problem-col">
+<div class="col-header" style="border-color: rgba(239, 68, 68, 0.3);">
+<div class="col-icon icon-problem">
+<i class="fas fa-user-clock"></i>
+</div>
+<h2 class="col-title text-red-400">הבעיה</h2>
+</div>
+<div class="problem-text">
+<p>לקוחות מתעכבים בנקודות חיכוך ועומדים בתור מעבר לזמן הסביר.</p>
+<p class="mt-4 text-slate-400 text-lg">
+          התוצאה: חוויית השירות נפגעת משמעותית, והסיכוי לנטישת עגלה ואובדן מכירות עולה בצורה חדה.
+        </p>
+</div>
+<!-- Abstract visual for "Long Queue" -->
+<div class="absolute bottom-10 left-8 right-8">
+<div class="flex justify-start items-center gap-1 mb-2">
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<div class="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center border border-slate-500 ml-2">
+<i class="fas fa-cash-register text-xs text-slate-300"></i>
+</div>
+</div>
+<p class="text-right text-xs mt-2 text-red-300 font-mono">WAIT_TIME &gt; 5:00 min</p>
+<div class="w-full bg-gray-700 h-1 mt-1 rounded-full overflow-hidden">
+<div class="h-full bg-red-500 w-3/4"></div>
+</div>
+</div>
+</div>
+<!-- Right Column: AiCA Solution -->
+<div class="solution-col">
+<div class="col-header" style="border-color: rgba(16, 185, 129, 0.3);">
+<div class="col-icon icon-solution">
+<i class="fas fa-stopwatch"></i>
+</div>
+<h2 class="col-title text-emerald-400">מה AiCA מאפשרת</h2>
+</div>
+<ul class="solution-list">
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>זיהוי צווארי בקבוק:</strong> תפוסה בזמן אמת ומפות חום של שהייה כדי לאתר נקודות עומס באופן מיידי.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>מעקב מסלול לקוח (בקרוב):</strong> הבנת הזרימה בחנות בפועל - מאיפה הגיעו, לאן הלכו ואיפה נעצרו.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>שיפור תשתיתי:</strong> שימוש בנתונים לבחינת פריסה, מבנה המדפים ושילוט להקלת העומס.</span>
+</li>
+</ul>
+<!-- Chart Container -->
+<div class="chart-area" id="queueChart" _echarts_instance_="ec_1770791882311" style="user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 576px; height: 178px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="576" height="178" style="position: absolute; left: 0px; top: 0px; width: 576px; height: 178px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class=""></div></div>
+</div>
+</div>
+</div>
+<script>
+  // Initialize ECharts
+  var chartDom = document.getElementById('queueChart');
+  var myChart = echarts.init(chartDom);
+  var option;
+
+  // Data: Queue Wait Time vs Abandonment Risk
+  option = {
+    backgroundColor: 'transparent',
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross' }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      top: '15%',
+      containLabel: true
+    },
+    legend: {
+      data: ['זמן המתנה ממוצע (דק\')', 'סיכון נטישה %'],
+      textStyle: { color: '#94a3b8' },
+      right: 10
+    },
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: false,
+        data: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
+        axisLine: { lineStyle: { color: '#475569' } },
+        axisLabel: { color: '#94a3b8' }
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        name: 'זמן המתנה',
+        position: 'right',
+        splitLine: { lineStyle: { color: '#334155', type: 'dashed' } },
+        axisLabel: { formatter: '{value} דק\'', color: '#94a3b8' }
+      },
+      {
+        type: 'value',
+        name: 'נטישה %',
+        position: 'left',
+        min: 0,
+        max: 50,
+        axisLabel: { formatter: '{value} %', color: '#f87171' },
+        splitLine: { show: false }
+      }
+    ],
+    series: [
+      {
+        name: 'זמן המתנה ממוצע (דק\')',
+        type: 'line',
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(52, 211, 153, 0.5)' },
+            { offset: 1, color: 'rgba(52, 211, 153, 0.05)' }
+          ])
+        },
+        itemStyle: { color: '#34d399' },
+        lineStyle: { width: 3 },
+        data: [1.5, 2.0, 3.5, 4.2, 3.0, 2.5, 3.8, 5.5, 6.2, 4.0, 2.0]
+      },
+      {
+        name: 'סיכון נטישה %',
+        type: 'line',
+        yAxisIndex: 1,
+        smooth: true,
+        itemStyle: { color: '#f87171' }, // Red for risk
+        lineStyle: { width: 3, type: 'dashed' },
+        data: [2, 3, 8, 12, 6, 4, 10, 25, 35, 15, 3]
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+  
+  // Resize handler
+  window.addEventListener('resize', function() {
+    myChart.resize();
+  });
+</script>
+
+</body></html>

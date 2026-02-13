@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&amp;family=Rubik:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Heebo', sans-serif;
+      overflow: hidden;
+      width: 1280px;
+      height: 720px;
+      background-color: #0f172a; /* Slate 900 */
+      color: #ffffff;
+    }
+    
+    .slide-container {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+    
+    /* Background Elements */
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .grid-lines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    
+    /* Agenda Cards */
+    .agenda-card {
+      background-color: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .agenda-card:hover {
+      background-color: rgba(30, 41, 59, 0.8);
+      border-color: rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+    
+    .card-header {
+      padding: 20px;
+      background-color: rgba(15, 23, 42, 0.4);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+      display: flex;
+      align-items: center;
+    }
+    
+    .section-number {
+      font-family: 'Rubik', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.05);
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      line-height: 1;
+    }
+    
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-left: 16px;
+      flex-shrink: 0;
+    }
+    
+    .icon-marketing { background-color: rgba(244, 63, 94, 0.15); color: #fb7185; }
+    .icon-merch { background-color: rgba(250, 204, 21, 0.15); color: #facc15; }
+    .icon-store { background-color: rgba(168, 85, 247, 0.15); color: #c084fc; }
+    .icon-ops { background-color: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+    
+    .card-title {
+      font-family: 'Rubik', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: white;
+    }
+    
+    .card-content {
+      padding: 20px;
+      flex-grow: 1;
+    }
+    
+    .topic-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .topic-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .topic-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #38bdf8;
+      margin-top: 8px;
+      margin-left: 10px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    .page-title-underline {
+      height: 4px;
+      width: 60px;
+      background-color: #06b6d4;
+      border-radius: 2px;
+      margin-top: 8px;
+    }
+</style>
+</head>
+<body style="">
+<!-- Background -->
+<div class="bg-pattern">
+<div class="grid-lines"></div>
+<!-- Decorative circle top right -->
+<div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(6,182,212,0.05) 0%, rgba(0,0,0,0) 70%);"></div>
+<!-- Decorative circle bottom left -->
+<div style="position: absolute; bottom: -150px; left: -50px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(59,130,246,0.04) 0%, rgba(0,0,0,0) 70%);"></div>
+</div>
+<!-- Content Container -->
+<div class="slide-container px-16 py-12">
+<!-- Header -->
+<div class="mb-10 relative z-10">
+<h2 class="text-4xl font-bold text-white tracking-tight">תוכן המצגת</h2>
+<div class="page-title-underline"></div>
+<p class="text-slate-400 mt-2 text-lg">סקירה מקיפה של יתרונות מערכת AiCA בארבעה תחומי ליבה</p>
+</div>
+<!-- Grid Layout -->
+<div class="grid grid-cols-2 gap-6 relative z-10 h-full pb-8">
+<!-- Card 1: Marketing -->
+<div class="agenda-card">
+<div class="section-number">01</div>
+<div class="card-header">
+<div class="icon-box icon-marketing">
+<i class="fas fa-bullhorn"></i>
+</div>
+<h3 class="card-title">שיווק (Marketing)</h3>
+</div>
+<div class="card-content">
+<ul class="topic-list">
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #fb7185;"></div>
+<p>מדידת יעילות החנות ויחסי המרה (Traffic to Sales)</p>
+</li>
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #fb7185;"></div>
+<p>בדיקת אפקטיביות של קמפיינים ומבצעים (Lift)</p>
+</li>
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #fb7185;"></div>
+<p>תובנות על קהלי יעד לפי גיל ומגדר</p>
+</li>
+</ul>
+</div>
+</div>
+<!-- Card 2: Merchandising -->
+<div class="agenda-card">
+<div class="section-number">02</div>
+<div class="card-header">
+<div class="icon-box icon-merch">
+<i class="fas fa-cubes"></i>
+</div>
+<h3 class="card-title"><p><span style="font-size: 1.25rem;">סידור סחורה ותצוגה&nbsp;</span><span style="font-size: 1.25rem;">(Merchandising)</span></p></h3>
+</div>
+<div class="card-content">
+<ul class="topic-list">
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #facc15;"></div>
+<p>אופטימיזציה של סידור הסחורה ותצוגות מדף</p>
+</li>
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #facc15;"></div>
+<p>זיהוי אזורים "מתים" והזדמנויות לשיפור</p>
+</li>
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #facc15;"></div>
+<p>מפות חום לניתוח עניין במוצרים (What Works Where)</p>
+</li>
+</ul>
+</div>
+</div>
+<!-- Card 3: Store Design & CX -->
+<div class="agenda-card">
+<div class="section-number">03</div>
+<div class="card-header">
+<div class="icon-box icon-store">
+<i class="fas fa-compass-drafting"></i>
+</div>
+<h3 class="card-title">תכנון חנות וחוויית לקוח</h3>
+</div>
+<div class="card-content">
+<ul class="topic-list">
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #c084fc;"></div>
+<p>ניתוח מסלולי הליכה וזרימת לקוחות (Flow)</p>
+</li>
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #c084fc;"></div>
+<p>הפחתת חיכוך וצווארי בקבוק בחנות</p>
+</li>
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #c084fc;"></div>
+<p>זיהוי נקודות עצירה ומעורבות לקוח</p>
+</li>
+</ul>
+</div>
+</div>
+<!-- Card 4: Operations -->
+<div class="agenda-card">
+<div class="section-number">04</div>
+<div class="card-header">
+<div class="icon-box icon-ops">
+<i class="fas fa-sliders"></i>
+</div>
+<h3 class="card-title">תפעול (Operations)</h3>
+</div>
+<div class="card-content">
+<ul class="topic-list">
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #22d3ee;"></div>
+<p>ייעול כוח-אדם והתאמה לשעות עומס</p>
+</li>
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #22d3ee;"></div>
+<p>ניהול תורים ומניעת עומסים בזמן אמת</p>
+</li>
+<li class="topic-item">
+<div class="topic-bullet" style="background-color: #22d3ee;"></div>
+<p>בקרת ניראות החנות והבחנה בין עובדים ללקוחות</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&amp;family=Rubik:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Heebo', sans-serif;
+      overflow: hidden;
+      width: 1280px;
+      height: 720px;
+      background-color: #0f172a; /* Slate 900 */
+      color: #ffffff;
+    }
+    
+    .slide-container {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+
+    /* Background Pattern - SVG based to avoid gradients */
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.1;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2338bdf8' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .header-section {
+      padding: 40px 60px 20px 60px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      background-color: rgba(15, 23, 42, 0.8);
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background-color: rgba(168, 85, 247, 0.2); /* Purple for Operations */
+      color: #c084fc;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-family: 'Rubik', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+    }
+
+    .main-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .content-grid {
+      display: flex;
+      flex: 1;
+      padding: 40px 60px;
+      gap: 40px;
+    }
+
+    .problem-col {
+      flex: 0.4;
+      background-color: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .solution-col {
+      flex: 0.6;
+      background-color: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .col-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-left: 16px;
+    }
+
+    .icon-problem {
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .icon-solution {
+      background-color: rgba(6, 182, 212, 0.2);
+      color: #22d3ee;
+    }
+
+    .col-title {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .problem-text {
+      font-size: 20px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .solution-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .solution-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .check-icon {
+      color: #22d3ee;
+      margin-left: 12px;
+      margin-top: 6px;
+      font-size: 18px;
+    }
+
+    .solution-text {
+      font-size: 18px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .chart-area {
+      flex: 1;
+      margin-top: 20px;
+      background-color: rgba(15, 23, 42, 0.5);
+      border-radius: 8px;
+      padding: 10px;
+      border: 1px solid rgba(56, 189, 248, 0.1);
+      min-height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+</style>
+</head>
+<body>
+<div class="bg-pattern"></div>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-section">
+<div class="category-badge">Operations</div>
+<h1 class="main-title">בקרת איכות וניראות החנות (Store Readiness)</h1>
+</div>
+<!-- Main Content -->
+<div class="content-grid">
+<!-- Left Column: The Problem -->
+<div class="problem-col">
+<div class="col-header" style="border-color: rgba(239, 68, 68, 0.3);">
+<div class="col-icon icon-problem">
+<i class="fas fa-broom"></i>
+</div>
+<h2 class="col-title text-red-400">הבעיה</h2>
+</div>
+<div class="problem-text">
+<p>אי-סדר, אזורים מבולגנים ותצוגות שמתפרקות לאורך היום.</p>
+<p class="mt-4 text-slate-400 text-lg">
+          קשה לזהות את הבעיות בזמן אמת, מה שפוגע ברושם הכללי של החנות ומוריד את נכונות הלקוחות לרכוש.
+        </p>
+</div>
+<!-- Visual for "Messy Store" -->
+<div class="absolute bottom-8 left-8 right-8 opacity-40">
+<div class="grid grid-cols-3 gap-3">
+<div class="h-16 bg-red-900 rounded border border-red-500 transform rotate-6"></div>
+<div class="h-16 bg-red-900 rounded border border-red-500 transform -rotate-3"></div>
+<div class="h-16 bg-red-900 rounded border border-red-500 transform rotate-12 translate-y-2"></div>
+</div>
+<p class="text-center text-xs mt-3 text-red-300">תצוגה לא מסודרת</p>
+</div>
+</div>
+<!-- Right Column: AiCA Solution -->
+<div class="solution-col">
+<div class="col-header" style="border-color: rgba(6, 182, 212, 0.3);">
+<div class="col-icon icon-solution">
+<i class="fas fa-eye"></i>
+</div>
+<h2 class="col-title text-cyan-400">מה AiCA מאפשרת</h2>
+</div>
+<ul class="solution-list">
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>זיהוי אי-סדר (בקרוב):</strong> זיהוי אוטומטי של אזורים מבולגנים ושליחת התרעות תפעוליות לצוות.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>מיקוד באזורים קריטיים:</strong> שימוש ב-Heatmaps כדי להבליט אזורים עם פעילות גבוהה שבהם הנראות היא הקריטית ביותר.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>תחזוקה פרואקטיבית:</strong> ניהול סבבי ניקיון וסידור מבוסס נתונים במקום סבבים עיוורים.</span>
+</li>
+</ul>
+<!-- Heatmap / Alert Visualization Area -->
+<div class="chart-area flex flex-row gap-4 p-4">
+<!-- Simulated Heatmap Context -->
+<div class="w-1/2 h-full bg-slate-800 rounded relative overflow-hidden border border-slate-700">
+<div class="absolute inset-0 opacity-30 bg-[url('https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&amp;fit=crop&amp;w=300&amp;q=80')] bg-cover bg-center grayscale"></div>
+<!-- Heatmap spots -->
+<div class="absolute top-1/3 left-1/3 w-16 h-16 bg-red-500 rounded-full blur-xl opacity-60 animate-pulse"></div>
+<div class="absolute bottom-1/4 right-1/4 w-12 h-12 bg-yellow-500 rounded-full blur-xl opacity-50"></div>
+<div class="absolute top-4 left-4 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+<i class="fas fa-fire text-red-400 mr-1"></i> אזורי פעילות גבוהה
+              </div>
+</div>
+<!-- Alert System Interface Mockup -->
+<div class="w-1/2 flex flex-col gap-3">
+<div class="bg-slate-800 border-l-4 border-red-500 p-3 rounded shadow-lg animate-pulse">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-white mb-1"><i class="fas fa-exclamation-circle text-red-500 ml-2"></i>התרעת אי-סדר</h4>
+<span class="text-xs text-gray-400">12:34</span>
+</div>
+<p class="text-xs text-gray-300">זוהה בלאגן חריג במחלקת ג'ינסים (מעבר 3).</p>
+</div>
+<div class="bg-slate-800 border-l-4 border-yellow-500 p-3 rounded shadow-lg opacity-80">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-white mb-1"><i class="fas fa-clock text-yellow-500 ml-2"></i>תזכורת סידור</h4>
+<span class="text-xs text-gray-400">12:15</span>
+</div>
+<p class="text-xs text-gray-300">חלפה שעה מאז הסידור האחרון בכניסה לחנות.</p>
+</div>
+<div class="bg-slate-800 border-l-4 border-green-500 p-3 rounded shadow-lg opacity-60">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-white mb-1"><i class="fas fa-check text-green-500 ml-2"></i>הושלם</h4>
+<span class="text-xs text-gray-400">11:50</span>
+</div>
+<p class="text-xs text-gray-300">צוות ניקיון טיפל באזור קופות.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

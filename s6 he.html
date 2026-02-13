@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&amp;family=Rubik:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Heebo', sans-serif;
+      overflow: hidden;
+      width: 1280px;
+      height: 720px;
+      background-color: #0f172a; /* Slate 900 */
+      color: #ffffff;
+    }
+    
+    .slide-container {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+
+    /* Background Pattern */
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.1;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2338bdf8' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .header-section {
+      padding: 40px 60px 20px 60px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      background-color: rgba(15, 23, 42, 0.8);
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background-color: rgba(244, 63, 94, 0.2); /* Red/Pink for Marketing */
+      color: #fb7185;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-family: 'Rubik', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+
+    .main-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .content-grid {
+      display: flex;
+      flex: 1;
+      padding: 40px 60px;
+      gap: 40px;
+    }
+
+    .problem-col {
+      flex: 0.4;
+      background-color: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .solution-col {
+      flex: 0.6;
+      background-color: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .col-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-left: 16px;
+    }
+
+    .icon-problem {
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .icon-solution {
+      background-color: rgba(6, 182, 212, 0.2);
+      color: #22d3ee;
+    }
+
+    .col-title {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .problem-text {
+      font-size: 20px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .solution-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .solution-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .check-icon {
+      color: #22d3ee;
+      margin-left: 12px;
+      margin-top: 6px;
+      font-size: 18px;
+    }
+
+    .solution-text {
+      font-size: 18px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .chart-area {
+      flex: 1;
+      margin-top: 20px;
+      background-color: rgba(15, 23, 42, 0.5);
+      border-radius: 8px;
+      padding: 10px;
+      border: 1px solid rgba(56, 189, 248, 0.1);
+      min-height: 200px;
+      position: relative;
+    }
+</style>
+</head>
+<body style="">
+<div class="bg-pattern"></div>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-section">
+<div class="category-badge">Marketing</div>
+<h1 class="main-title">התאמה לקהלי יעד (Audience Insights)</h1>
+</div>
+<!-- Main Content -->
+<div class="content-grid">
+<!-- Left Column: The Problem -->
+<div class="problem-col">
+<div class="col-header" style="border-color: rgba(239, 68, 68, 0.3);">
+<div class="col-icon icon-problem">
+<i class="fas fa-users-slash"></i>
+</div>
+<h2 class="col-title text-red-400">הבעיה</h2>
+</div>
+<div class="problem-text">
+<p>אותה חנות ואותו מסר שיווקי לא עובדים באותה יעילות לקהלים שונים.</p>
+<p class="mt-4 text-slate-400 text-lg">
+          ללא הבנה עמוקה של הדמוגרפיה המבקרת בחנות, קמפיינים ותצוגות הופכים ל"ירייה באפלה" במקום להיות ממוקדים ומותאמים.
+        </p>
+</div>
+<!-- Abstract visual for "diverse crowd" -->
+<div class="absolute bottom-8 left-8 right-8 opacity-40">
+<div class="flex justify-center items-center gap-3 flex-wrap">
+<i class="fas fa-user text-3xl text-gray-500"></i>
+<i class="fas fa-user text-4xl text-gray-400"></i>
+<i class="fas fa-user text-2xl text-gray-600"></i>
+<i class="fas fa-user text-5xl text-gray-500"></i>
+<i class="fas fa-user text-3xl text-gray-400"></i>
+<i class="fas fa-question text-red-400 text-4xl absolute"></i>
+</div>
+<p class="text-center text-xs mt-4 text-gray-400">מי הלקוח שלך?</p>
+</div>
+</div>
+<!-- Right Column: AiCA Solution -->
+<div class="solution-col">
+<div class="col-header" style="border-color: rgba(6, 182, 212, 0.3);">
+<div class="col-icon icon-solution">
+<i class="fas fa-id-card-clip"></i>
+</div>
+<h2 class="col-title text-cyan-400">מה AiCA מאפשרת</h2>
+</div>
+<ul class="solution-list">
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>זיהוי דמוגרפי:</strong> פילוח מבקרים לפי מין וטווחי גיל להבנת הרכב הקהל.</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>ניתוח עיתוי:</strong> זיהוי מתי נכנס כל פלח אוכלוסייה (ימים/שעות).</span>
+</li>
+<li class="solution-item">
+<i class="fas fa-check-circle check-icon"></i>
+<span class="solution-text"><strong>דיוק מסרים:</strong> התאמת שעות פעילות, תצוגות וקמפיינים לקהל הרלוונטי.</span>
+</li>
+</ul>
+<!-- Chart Container -->
+<div class="chart-area" id="demographicsChart" _echarts_instance_="ec_1770791847128" style="user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 576px; height: 178px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="576" height="178" style="position: absolute; left: 0px; top: 0px; width: 576px; height: 178px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class=""></div></div>
+</div>
+</div>
+</div>
+<script>
+  // Initialize ECharts
+  var chartDom = document.getElementById('demographicsChart');
+  var myChart = echarts.init(chartDom);
+  var option;
+
+  // Mock Data for Demographics
+  option = {
+    backgroundColor: 'transparent',
+    title: {
+      text: 'פילוח מבקרים לפי גיל ומין (שבועי)',
+      textStyle: { color: '#94a3b8', fontSize: 14, fontWeight: 'normal' },
+      left: 'center',
+      top: 5
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'shadow' }
+    },
+    legend: {
+      top: 30,
+      textStyle: { color: '#cbd5e1' },
+      data: ['גברים', 'נשים']
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      top: '25%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'value',
+      axisLabel: { color: '#94a3b8' },
+      splitLine: { lineStyle: { color: '#334155', type: 'dashed' } }
+    },
+    yAxis: {
+      type: 'category',
+      data: ['18-24', '25-34', '35-44', '45-54', '55+'],
+      axisLabel: { color: '#94a3b8' },
+      axisLine: { lineStyle: { color: '#475569' } }
+    },
+    series: [
+      {
+        name: 'גברים',
+        type: 'bar',
+        stack: 'total',
+        label: { show: true, position: 'insideRight', formatter: '{c}%' },
+        itemStyle: { color: '#3b82f6' }, // Blue
+        data: [15, 20, 25, 15, 10]
+      },
+      {
+        name: 'נשים',
+        type: 'bar',
+        stack: 'total',
+        label: { show: true, position: 'insideRight', formatter: '{c}%' },
+        itemStyle: { color: '#f43f5e' }, // Pink/Red
+        data: [25, 30, 20, 10, 5]
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+  
+  // Resize handler
+  window.addEventListener('resize', function() {
+    myChart.resize();
+  });
+</script>
+
+</body></html>
